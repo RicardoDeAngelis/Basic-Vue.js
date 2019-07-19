@@ -1,0 +1,234 @@
+<!-- filtros se utiliza el caracter pipe | ,estos filtros tambien 
+se agregan a nuetro objeto vue(puede recibir varias cosas aparte de el: y data:)
+recibe un objeto json filter{} este tendra un atributo o variulble appercase y lowercase que 
+recibe una funcion anonima
+Los filtros se pueden concatenar para ir aplicandolos uno despues de otro
+manejo de eventos(accion de algun boton) : usaremos el tributo v-on:click="nombrevariable"
+debemos pasar a nuetro objeto vue el atributo o variable methods este tendra metodos q le asignemos 
+ formularios
+ debemos utilzar el atributo v-model en nuestro input
+cuando hacemos submit de un formularios enviamos datos a un server
+
+como crear componentes en Vue.js
+llevar el codigo a codigo ams declarativo significa el que hacer ,no como hacerlo
+
+onchange es un evento propio de javascript que se dispara cada vez que algo cambia, en vue se utiliza como: v-on:change o @change. A éste evento le asocias la función que quieres que se dispare cada vez que ocurra el evento, @change="miFuncion"
+en este caso Sacha uso @change=“onchange”, por eso tu confusión.
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+ <meta charset="UTF-8" >
+ 
+
+<head>
+    <title>Curso JS</title>
+</head>
+<body>
+    <hr>
+    <div id="app">
+        <!-- templete de html hace que no se muetre en el dom  -->
+      
+        <!-- <templete v-if=mostrar>
+                <hr>
+              <h3>Esto esta con un templete</h3>
+                <h1  >{{titulo | uppercase}}</h1>
+                <h2  >{{subtitulo | lowercase |capitalize}}</h2> -->
+            <!-- la variable va dentro de ese doble llave
+            eso se llama expresion es una parametro q enviamos  -->
+            <!-- hola {{nombre}} -->
+            <!-- agrengando link -->
+            <!-- Vue no nos permite usar expresiones con href pero si en target -->
+            <!-- <a href="{{url}}" target="_blank">{{pagina}} </a> -->
+            
+            
+            <!--pero asi si se puede  -->
+            <!--manera corta de escribir v-bind:href es :href  -->
+            <!-- <a v-if="mostrar" v:href="url" target="_blank">Ir a{{pagina}} </a> -->
+    
+            <!-- para ocultar cosas en la pagina usamos v-if="variable"
+             esto elimina los elementos del DOM,y solo se puede usar con el atributo templete
+            otra manera de ocultar elementos es el atributo con v-show="variable"
+            este atributo oculta  sin eliminar los elemntos lo que hace vuejs es poner 
+            ldisplay:none en su clase css,este atributo solo se puede poner a elementos 
+            que html entiende,para perfomance utilizaremos v-show -->
+
+            <!-- <a   :href="url" target="_blank">Ir a {{pagina}} </a> -->
+             <!-- :href no pertenece al dom es parrte vuejs -->
+             <!-- manera clasica -->
+            <!-- <a href="https://google.com.ar" target="_blank">Google</a> -->
+
+            <hr>
+        </templete>
+        
+       
+       
+        <div v-show="!mostrar">
+            <hr>
+            Esto esta oculto
+            <hr>
+        </div>
+       
+
+      
+        <div v-show="mostrar">
+                <!-- <hr>
+              <input type="text"name="nombre1"
+                 placeholder="Ingresa tu nombre" v-model="nombre1">
+                <p>Tu nombre es mayusculas es: {{nombre1 |uppercase }}</p> -->
+                <!--con vuejs utilazaremos para q no se haga este submit
+                v-on:submit.prevent="submit" podemos abreviar en eventos con
+                 @submit.prevent="submit"
+                   -->
+
+
+                   
+                <!--sin for colocamos manualemnte y mostramos los elementos
+                     <form @submit.prevent="submit" action=""methods="get">
+                     <h2>Cuales son tus cursos?</h2>
+                    <input v-model="cursossinfor" type="checkbox" id="vue"value="vue">
+                     el id y el for deben ser los mismos 
+                    <label for="vue">Curso de Vue.js</label>
+                    
+                    <input v-model="cursossinfor" type="checkbox" id="javascrip"value="javascrip">
+                    <label for="javascrip">Curso de javascrip</label>
+                    <input v-model="cursossinfor" type="checkbox" id="React.js"value="React.js">
+                    <label for="React.js">Curso de react.js</label>
+                    <button type="submit">Enviar</button>
+                </form> -->
+                 
+               <h4>con vue utilizamos for para mostrar los elementos</h4> 
+                
+                <form @submit.prevent="submit" action="" method="get">
+                        <h2>¿Cuáles son tus cursos favoritos?</h2>
+                        <template v-for="curso in cursos">
+                           <!-- con la etiquertas curso haremos un componente curso de vue 
+                                este componente es el responsable de dibujar el checkboy y el label-->
+                            <curso :curso="curso" v-on:checked="selectCurso"></curso>
+                          <!-- opcion selecionar cursos 
+                              <input v-model="cursosSeleccionados" type="checkbox"
+                           v-bind:id="curso.value" v-bind:value="curso.value">
+                          <label v-bind:for="curso.value">{{ curso.nombre }}</label>   -->
+                        </template>
+                        <button type="submit">Enviar</button>
+                      </form>
+
+                <!-- <h1 >{{titulo}}</h1>
+                <h2 >{{subtitulo}}</h2>
+                <h3>Esto no esta oculto</h3>
+               podes resumir el v-on:click con @click -->
+                <!-- <button @click="sumar">Sumar 1</button> -->
+                <!--podemos omitir las funcion          
+                  asi=>  -->
+                 <!-- <button @click="contador++" >suma sin funcion</button> 
+                <button @click="restar" >Restar 1</button>
+                El contador esta en {{contador}} -->       
+                 </div>
+            <hr>
+            
+    </div>
+   <!-- libreria Vue -->
+   <script src="https://cdn.jsdelivr.net/npm/vue"></script>   
+    <!-- logica -->
+    <script >
+    //creamos el componente Vue con su metodo component
+    // aca crearemos el input y el label y le pasamos parametros
+    // el primero es el nombre de la etiqueta('string') y el segundo es un objeto{}
+    // este objeto le indicamo como es que queremos q aparezca en la pantalla
+    // le podemos poner el atributo templete que recibe un string de comillas invertidas
+    // para poder apretar enter,al templete hay q indicarle con prop(propiedades)
+    // aca le decimos q propiedad necesita para dibujarse
+    Vue.component('curso',{
+        props:['curso'],
+        methods:{
+           onChange:function(ev){
+               this.$emit('checked',this.curso.value,ev.target.checked
+               )
+           } 
+        },
+        template:`
+        <div>
+        <input type="checkbox"
+        v-bind:id="curso.value" v-bind:value="curso.value" @change="onChange">
+        <label v-bind:for="curso.value">{{ curso.nombre }}</label>  
+         </div>   
+        `
+    })
+    
+
+        // creamos una variable y le asignamos 
+        // el valor que nos devuelve el objeto Vue
+        // a este objeto le pasamos unos parametros
+        // utilizamos un objeto JS{}
+    let app=new Vue({
+        // el elemento con id se obtiene asi,usando un selector
+        el:'#app',
+        data:{
+            
+             nombre1: '',
+            // nombre:'',
+            url:'http://google.com.ar',
+            pagina:'Google',
+             mostrar:true,
+             titulo:'Estoy en casa',
+             subtitulo:'Estoy haciendo el curso de Vue.js',
+             contador: 0,
+            //  cursossinfor:[],
+             cursos:[
+             { nombre: 'Curso de Introducción a Vue.js', value: 'vue' },
+          { nombre: 'Curso de SEO', value: 'seo' },
+          { nombre: 'Curso React y Redux', value: 'react' },
+          { nombre: 'Curso de Growth Marketing', value: 'growth' }
+        ],
+             cursosSeleccionados:[]
+
+            },
+        // filters:{
+        //     uppercase:function(str){
+        //        return str.toUpperCase()
+        // arrow funtion  
+        filters:{
+            uppercase:(str)=>{
+               return str.toUpperCase()
+               
+            },
+            lowercase:(str)=>{
+                return str.toLowerCase()
+            },
+            capitalize:(str)=>{
+                // El método slice() extrae una sección de una cadena y devuelve una cadena nueva.
+                return str.charAt(0).toUpperCase()+str.slice(1)
+            }},
+          methods:{
+            // en vue solo funciona con funciones originales
+            // con arrow function hace referencia a windows y no al dom
+                sumar:function(){
+                    // nos referenciamos a la variable contador con this
+                        this.contador++
+                },
+                restar:function(){
+                    this.contador-- 
+                
+            },
+            
+                
+                submit:function(){
+                    console.log("metodo submit")
+                    console.log(this.cursosSeleccionados)
+                    // console.log(this.cursossinfor)
+                },
+                selectCurso:function(curso,checked){
+                        if(checked){
+                            this.cursosSeleccionados.push(curso)
+                        }else{
+                            let index=this.cursosSeleccionados.indexOf(curso)
+                            this.cursosSeleccionados.splece(index,1)
+                        }
+                }
+            }
+            
+        
+    })
+    </script>
+</body>
+</html>
