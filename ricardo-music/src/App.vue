@@ -65,6 +65,7 @@ export default {
   text-align center
   color #2c3e50
   margin-top 60px
+  background-color #a4a4a4
 
 h1, h2
   font-weight normal
